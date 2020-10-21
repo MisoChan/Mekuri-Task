@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Task Lists</h1>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TopPage</title>
+</head>
+
+<body>
+    
+      <div class="row">
+            <%# メイン部分  %>
+            <div class="col-9">
+                <a href="#">タスクが並ぶところ　For文で回す格好かな。</a>
+            </div>
+            <%# 右サイドバー部分 %>
+            <div class="col-3">
+                <ul id="right-sidebar" class="nav-sidebar" style="list-style: none; padding-left: 0;">
+                
+                        <li class="mt-1">
+                            <div id="calender" >
+                                <a href="#">ここにカレンダー。</a>
+
+                            </div>
+                        </li>
+                   
+               
+                        <li class="mt-5">
+                            <div id="time_clock">
+                                <a href="#">ここに現在時刻</a>
+
+                            </div>
+                        </li>
+                    
+                    
+                        <li class="mt-2">
+                            <button type="button" class="btn btn-primary">タスク消化スタート！</button>
+                        </li>
+
+
+                 
+                </ul>
+                
+            </div>
+        </div>
+    
+</body>
+</html>
