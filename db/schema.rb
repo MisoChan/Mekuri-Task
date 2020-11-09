@@ -15,19 +15,24 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "task_headers", primary_key: "task_uuid", id: :string, force: :cascade do |t|
+  create_table "task_plan_headers", primary_key: "task_uuid", id: :string, force: :cascade do |t|
     t.string "title"
     t.text "memo"
+    t.decimal "order_num"
+    t.datetime "plan_start_date"
+    t.datetime "plan_end_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "task_lists", primary_key: "task_uuid", id: :string, force: :cascade do |t|
+  create_table "task_plan_lists", primary_key: "task_uuid", id: :string, force: :cascade do |t|
     t.string "task_sub_uuid"
-    t.string "hierarkey_num"
+    t.decimal "hierarkey_num"
     t.string "seq_num"
     t.string "title"
     t.text "task_memo"
+    t.datetime "plan_start_date"
+    t.datetime "plan_end_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
