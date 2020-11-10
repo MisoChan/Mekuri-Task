@@ -15,7 +15,12 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "m_user", primary_key: "user_uuid", id: :uuid, array: true, default: nil, force: :cascade do |t|
+  create_table "m_user", primary_key: "user_system_uuid", id: :uuid, default: nil, force: :cascade do |t|
+    t.string "user_id", limit: 10, null: false
+    t.string "user_name", limit: 40, null: false
+    t.string "user_email_address", limit: 20, null: false
+    t.string "user_password_encrypted", null: false
+    t.index ["user_id"], name: "m_user_un", unique: true
   end
 
   create_table "t_task_group_linking", primary_key: ["group_uuid", "task_uuid"], force: :cascade do |t|
@@ -49,6 +54,9 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "created_user_uuid", null: false
+  end
+
+  create_table "t_task_user_linking", id: false, force: :cascade do |t|
   end
 
 end
