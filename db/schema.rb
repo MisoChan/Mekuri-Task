@@ -56,7 +56,11 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
     t.string "created_user_uuid", null: false
   end
 
-  create_table "t_task_user_linking", id: false, force: :cascade do |t|
+  create_table "t_task_user_linking", primary_key: ["task_uuid", "user_system_uuid"], force: :cascade do |t|
+    t.uuid "user_system_uuid", null: false
+    t.uuid "task_uuid", null: false
+    t.integer "authority", default: 1, null: false
+    t.boolean "delete_flag", default: false, null: false
   end
 
 end
