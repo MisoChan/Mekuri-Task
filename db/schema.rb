@@ -15,6 +15,12 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "m_flags", id: false, force: :cascade do |t|
+    t.string "flag_id", limit: 10, null: false
+    t.string "flag_value", limit: 30
+    t.uuid "user_system_uuid"
+  end
+
   create_table "m_user", primary_key: "user_system_uuid", id: :uuid, default: nil, force: :cascade do |t|
     t.string "user_id", limit: 10, null: false
     t.string "user_name", limit: 40, null: false
@@ -23,7 +29,7 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
     t.index ["user_id"], name: "m_user_un", unique: true
   end
 
-  create_table "t_task_group_linking", primary_key: ["group_uuid", "task_uuid"], force: :cascade do |t|
+  create_table "t_task_group_linking", primary_key: ["group_uuid", "task_uuid"], comment: "タスクグループ参加テーブル", force: :cascade do |t|
     t.uuid "task_uuid", null: false
     t.uuid "group_uuid", null: false
     t.datetime "updated_at", null: false
@@ -56,11 +62,12 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
     t.string "created_user_uuid", null: false
   end
 
-  create_table "t_task_user_linking", primary_key: ["task_uuid", "user_system_uuid"], force: :cascade do |t|
-    t.uuid "user_system_uuid", null: false
-    t.uuid "task_uuid", null: false
-    t.integer "authority", default: 1, null: false
-    t.boolean "delete_flag", default: false, null: false
+  create_table "t_task_user_linking", primary_key: ["task_uuid", "user_system_uuid"], comment: "ユーザ参加者テーブル", force: :cascade do |t|
+    t.uuid "user_system_uuid", null: false, comment: "ユーザシステムUID"
+    t.uuid "task_uuid", null: false, comment: "タスクUID"
+    t.integer "authority", default: 1, null: false, comment: "ユーザ閲覧権限"
+    t.datetime "updated_at", null: false
+    t.datetime "created_at", null: false
   end
 
 end
