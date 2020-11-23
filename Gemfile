@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+ENV['NOKOGIRI_USE_SYSTEM_LIBRARIES'] = 'YES'
+
 ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -57,5 +59,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #Bootstraps
 gem 'bootstrap'
-gem "jquery-rails"
+gem "jquery-rails"  
 gem "jquery-ui-rails"
