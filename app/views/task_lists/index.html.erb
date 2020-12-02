@@ -1,3 +1,4 @@
+<%# encoding: UTF-8 %>
 <p id="notice"><%= notice %></p>
 
 <h1>Task Lists</h1>
@@ -8,6 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskList</title>
+    <%= stylesheet_link_tag "task_lists", :media => "all" %>
 </head>
 
 <body>
@@ -15,37 +17,68 @@
       <div class="row">
             <%# メイン部分  %>
             <div class="col-9" >
-                <div>
+                
+                <%# タスク一覧部分 %>
+                <div class="tasks">
                     <ul style="list-style:none">
-                            <li class="header">タイトル 
-                                <div class="text-right">
-                                    <span >予定</span> <span> 実績</span>
-                                
+                            <li class="task_header_li" ><span class="task_header">タイトル</span> 
+                                <div class="text-right ">
+                                    <span>予定 12:34 - 15:33 ( 2h 5m )</span> <span>&</span><span> 実績 未確定 </span>
                                 </div>
                             </li>
-                            <li class="task_contents">内容１</li>
-                            <li class="task_contents">内容１</li>
-                            <li class="task_contents">内容１</li>
+                            <ul style="list-style:none" class="task_detail">
+                                <li class="task_contents">内容１</li>
+                                <li class="task_contents">内容２</li>
+                                <li class="task_contents">内容３</li>
+                            </ul>
                     </ul>
                </div>
-                 <div>
+                               <%# タスク一覧部分 %>
+                <div class="tasks">
                     <ul style="list-style:none">
-                            <li class="header">タイトル 
-                                <div class=" text-right">
-                                    <span >予定</span> <span > 実績</span>
-                                
+                            <li class="task_header_li" ><span class="task_header">タイトル</span> 
+                                <div class="text-right ">
+                                    <span>予定 12:34 - 15:33 ( 2h 5m )</span> <span>&</span><span> 実績 未確定 </span>
                                 </div>
                             </li>
-                            <li class="task_contents">内容１
-                            
-                            
-                            </li>
-                            <li class="task_contents">内容１</li>
-                            <li class="task_contents">内容１</li>
-                            <li class="task_contents">内容１</li>
-                            <li class="task_contents">内容１</li>
+                            <ul style="list-style:none" class="task_detail">
+                                <li class="task_contents">内容１</li>
+                                <li class="task_contents">内容２</li>
+                                <li class="task_contents">内容３</li>
+                            </ul>
                     </ul>
-               </div>           
+               </div>
+                               <%# タスク一覧部分 %>
+                <div class="tasks">
+                    <ul style="list-style:none">
+                            <li class="task_header_li" ><span class="task_header">タイトル</span> 
+                                <div class="text-right ">
+                                    <span>予定 12:34 - 15:33 ( 2h 5m )</span> <span>&</span><span> 実績 未確定 </span>
+                                </div>
+                            </li>
+                            <ul style="list-style:none" class="task_detail">
+                                <li class="task_contents">内容１</li>
+                                <li class="task_contents">内容２</li>
+                                <li class="task_contents">内容３</li>
+                            </ul>
+                    </ul>
+               </div>
+                               <%# タスク一覧部分 %>
+                <div class="tasks">
+                    <ul style="list-style:none">
+                            <li class="task_header_li" ><span class="task_header">タイトル</span> 
+                                <div class="text-right ">
+                                    <span>予定 12:34 - 15:33 ( 2h 5m )</span> <span>&</span><span> 実績 未確定 </span>
+                                </div>
+                            </li>
+                            <ul style="list-style:none" class="task_detail">
+                                <li class="task_contents">内容１</li>
+                                <li class="task_contents">内容２</li>
+                                <li class="task_contents">内容３</li>
+                            </ul>
+                    </ul>
+               </div>
+
 
             </div>
      
@@ -53,7 +86,7 @@
 
             
             <%# 右サイドバー部分 %>
-            <div class="col-3">
+            <div class="col-3 right">
                 <ul id="right-sidebar" class="nav-sidebar" style="list-style: none; padding-left: 0;">
                 
                         <li class="mt-1">
