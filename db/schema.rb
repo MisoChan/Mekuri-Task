@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 2020_11_08_083213) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "m_flags", id: false, force: :cascade do |t|
