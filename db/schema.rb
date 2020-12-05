@@ -13,15 +13,16 @@
 ActiveRecord::Schema.define(version: 2020_11_08_083213) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "m_flags", id: false, force: :cascade do |t|
+  create_table "m_task_flags", id: false, force: :cascade do |t|
     t.string "flag_id", limit: 10, null: false
     t.string "flag_value", limit: 30
-    t.uuid "user_system_uuid"
+    t.uuid "user_system_uuid", default: -> { "gen_random_uuid()" }
   end
 
-  create_table "m_user", primary_key: "user_system_uuid", id: :uuid, default: nil, force: :cascade do |t|
+  create_table "m_users", primary_key: "user_system_uuid", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "user_id", limit: 10, null: false
     t.string "user_name", limit: 40, null: false
     t.string "user_email_address", limit: 20, null: false
@@ -37,29 +38,29 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
     t.string "created_user_uuid", null: false
   end
 
-  create_table "t_task_plan_headers", primary_key: "task_uuid", id: :uuid, default: nil, force: :cascade do |t|
-    t.string "title"
-    t.text "memo"
-    t.decimal "order_num"
-    t.datetime "plan_start_date"
-    t.datetime "plan_end_date"
+  create_table "t_task_plan_headers", primary_key: "task_uuid", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title", comment: "タスクタイトル"
+    t.text "memo", comment: "メモ"
+    t.decimal "order_num", comment: "処理順序"
+    t.datetime "plan_start_date", null: false, comment: "予定開始日"
+    t.datetime "plan_end_date", null: false, comment: "予定終了日"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "created_user_uuid", null: false
+    t.uuid "created_user_uuid", null: false
   end
 
-  create_table "t_task_plan_lists", primary_key: ["task_uuid", "task_sub_uuid"], force: :cascade do |t|
-    t.uuid "task_uuid", null: false
-    t.string "task_sub_uuid", null: false
-    t.decimal "hierarkey_num"
-    t.string "seq_num"
-    t.string "title"
-    t.text "task_memo"
-    t.datetime "plan_start_date"
-    t.datetime "plan_end_date"
+  create_table "t_task_plan_lists", primary_key: ["task_uuid", "task_sub_uuid"], comment: "タスク予定内容テーブル", force: :cascade do |t|
+    t.uuid "task_uuid", null: false, comment: "タスクヘッダUUID"
+    t.uuid "task_sub_uuid", null: false, comment: "タスク内容UUID"
+    t.decimal "hierarkey_num", comment: "階層番号"
+    t.string "seq_num", comment: "タスク処理順番号"
+    t.string "title", comment: "タイトル"
+    t.text "task_memo", comment: "メモ"
+    t.datetime "plan_start_date", null: false, comment: "予定開始日時"
+    t.datetime "plan_end_date", null: false, comment: "予定終了日時"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "created_user_uuid", null: false
+    t.uuid "created_user_uuid", null: false, comment: "作成ユーザID"
   end
 
   create_table "t_task_user_linking", primary_key: ["task_uuid", "user_system_uuid"], comment: "ユーザ参加者テーブル", force: :cascade do |t|
