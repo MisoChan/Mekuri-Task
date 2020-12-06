@@ -66,3 +66,6 @@ end
 gem 'bootstrap'
 gem "jquery-rails"  
 gem "jquery-ui-rails"
+
+#scenic
+gem 'scenic'
