@@ -17,23 +17,27 @@
       <div class="row">
             <%# メイン部分  %>
             <div class="col-9" >
-                
-                <%# タスク一覧部分 %>
-                <div class="tasks">
-                    <ul style="list-style:none">
-                            <li class="task_header_li" ><span class="task_header">タイトル</span> 
+                <%= @task_headers.each do |task_header| %>
+                    <%# タスク一覧部分 %>
+                    <div class="tasks">
+                    
+                        <ul style="list-style:none">
+                            <li class="task_header_li" ><span class="task_header"><%= task_header.title %></span> 
                                 <div class="text-right ">
-                                    <span>予定 12:34 - 15:33 ( 2h 5m )</span> <span>&</span><span> 実績 未確定 </span>
+                                    <span>予定 <%= task_header.plan_start_date %> - <%= task_header.plan_end_date %>( 2h 5m )</span> <span>&</span><span> 実績 未確定 </span>
                                 </div>
                             </li>
-                            <ul style="list-style:none" class="task_detail">
-                                <li class="task_contents">内容１</li>
-                                <li class="task_contents">内容２</li>
-                                <li class="task_contents">内容３</li>
-                            </ul>
-                    </ul>
-               </div>
                         
+                            <ul style="list-style:none" class="task_detail">
+                                <% task_header.t_task_plan_lists.each do |task_list| %>
+                                    <li class="task_contents"><%= task_list.title %></li>
+                                <% end %>
+                            </ul>
+                            
+                        </ul>
+                                
+                    </div>
+                <% end %>        
 
 
             </div>

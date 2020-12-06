@@ -1,3 +1,3 @@
 class TTaskPlanHeader < ApplicationRecord
-    get_primary_key :task_uuid
+    has_many :t_task_plan_lists
 end

@@ -4,7 +4,7 @@ class TaskListsController < ApplicationController
   # GET /task_lists
   # GET /task_lists.json
   def index
-    @task_lists = TTaskPlanHeader.all
+    @task_headers = TTaskPlanHeader.all.includes(:t_task_plan_lists)
   end
 
   # GET /task_lists/1
@@ -65,7 +65,7 @@ class TaskListsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_task_list
-      @task_list = TaskList.find(params[:id])
+      @task_headers = TTaskPlanHeader.all
     end
 
     # Only allow a list of trusted parameters through.
