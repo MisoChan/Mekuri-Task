@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
     t.string "created_user_uuid", null: false
   end
 
-  create_table "t_task_plan_headers", primary_key: "task_uuid", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "t_task_plan_headers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title", comment: "タスクタイトル"
     t.text "memo", comment: "メモ"
     t.decimal "order_num", comment: "処理順序"
@@ -49,9 +49,9 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
     t.uuid "created_user_uuid", null: false
   end
 
-  create_table "t_task_plan_lists", primary_key: ["task_uuid", "task_sub_uuid"], comment: "タスク予定内容テーブル", force: :cascade do |t|
-    t.uuid "task_uuid", null: false, comment: "タスクヘッダUUID"
-    t.uuid "task_sub_uuid", null: false, comment: "タスク内容UUID"
+  create_table "t_task_plan_lists", primary_key: ["t_task_plan_header_id", "id"], comment: "タスク予定内容テーブル", force: :cascade do |t|
+    t.uuid "t_task_plan_header_id", null: false, comment: "タスクヘッダUUID"
+    t.uuid "id", null: false, comment: "タスク内容UUID"
     t.decimal "hierarkey_num", comment: "階層番号"
     t.string "seq_num", comment: "タスク処理順番号"
     t.string "title", comment: "タイトル"
