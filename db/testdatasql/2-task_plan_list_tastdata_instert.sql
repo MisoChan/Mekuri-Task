@@ -3,14 +3,14 @@
 with task_plan_headers  as (
 	SELECT 
 	 row_number() OVER() as ROWS ,
-	 task_uuid
+	 id
 
 	FROM public.t_task_plan_headers
 )
 INSERT INTO public.t_task_plan_lists
 (
-	task_uuid
-	, task_sub_uuid
+	t_task_plan_header_id
+	, id
 	, hierarkey_num
 	, seq_num
 	, title
@@ -22,9 +22,8 @@ INSERT INTO public.t_task_plan_lists
 	, created_user_uuid
 )
 select  
-	task_uuid
-	, gen_random_uuid() as task_sub_uuid
-	
+	id as t_task_plan_header_id
+	, gen_random_uuid() as id
 	, mod(row_number() over()/2 ,2) + 1  as hierarkey_num
 	, mod(row_number() over(),3)+1 as seq_num
 	, 'ないようタイトル'|| mod(row_number() over(),3)+1 as title
