@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
 
   create_view "task_plan_lists", sql_definition: <<-SQL
       SELECT t_task_head_plan_linking.t_task_plan_lists_id AS id,
-      t_task_head_plan_linking.t_task_plan_headers_id,
+      t_task_head_plan_linking.t_task_plan_headers_id AS t_task_plan_header_id,
       t_task_plan_lists.hierarkey_num,
       t_task_plan_lists.seq_num,
       t_task_plan_lists.title,
