@@ -1,0 +1,2 @@
+class TaskPlanList < ApplicationRecord
+end

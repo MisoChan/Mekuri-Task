@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
 
   create_table "t_task_head_plan_linking", id: false, force: :cascade do |t|
     t.uuid "t_task_plan_headers_id", null: false
-    t.uuid "t_task_plan_id", null: false
+    t.uuid "t_task_plan_lists_id", null: false
     t.datetime "updated_at", null: false
     t.datetime "created_at", null: false
     t.string "created_user_uuid", null: false
@@ -77,4 +77,20 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
     t.datetime "created_at", null: false
   end
 
+  add_foreign_key "t_task_head_plan_linking", "t_task_plan_headers", column: "t_task_plan_headers_id", name: "t_task_head_plan_linking_fk", on_delete: :cascade
+  add_foreign_key "t_task_head_plan_linking", "t_task_plan_lists", column: "t_task_plan_lists_id", name: "t_task_head_plan_linking_fk_1"
+
+  create_view "task_plan_lists", sql_definition: <<-SQL
+      SELECT t_task_head_plan_linking.t_task_plan_lists_id AS id,
+      t_task_head_plan_linking.t_task_plan_headers_id,
+      t_task_plan_lists.hierarkey_num,
+      t_task_plan_lists.seq_num,
+      t_task_plan_lists.title,
+      t_task_plan_lists.task_memo,
+      t_task_plan_lists.plan_start_date,
+      t_task_plan_lists.plan_end_date
+     FROM (t_task_head_plan_linking
+       JOIN t_task_plan_lists ON ((t_task_plan_lists.id = t_task_head_plan_linking.t_task_plan_lists_id)))
+    ORDER BY t_task_head_plan_linking.t_task_plan_headers_id, t_task_plan_lists.seq_num;
+  SQL
 end
