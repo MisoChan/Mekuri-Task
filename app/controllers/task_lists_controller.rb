@@ -4,13 +4,14 @@ class TaskListsController < ApplicationController
   # GET /task_lists
   # GET /task_lists.json
   def index
-    @task_headers = TTaskPlanHeader.includes(:task_plan_lists)
+
   end
 
   # GET /task_lists/1
   # GET /task_lists/1.json
-  def show
-    @task_headers = TTaskPlanHeader.all
+  def get
+    result = TTaskPlanHeader.includes(:task_plan_lists)
+    render json: result.to_json(:include => :task_plan_lists)
   end
 
   # GET /task_lists/new
