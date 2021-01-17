@@ -9,7 +9,7 @@ class TaskListsController < ApplicationController
 
   # GET /task_lists/1
   # GET /task_lists/1.json
-  def get
+  def show
     result = TTaskPlanHeader.includes(:task_plan_lists)
     render json: result.to_json(:include => :task_plan_lists)
   end

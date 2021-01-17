@@ -7,15 +7,16 @@
 
 import Vue from 'vue'
 import App from '../task_list.vue'
-import axios from '../packs/axios'
+
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = new Vue({
+  
+  const task_list = new Vue({
     render: h => h(App)
   }).$mount()
-  document.body.appendChild(app.$el)
+  document.body.appendChild(task_list.$el)
 
-  console.log(app)
+  console.log(task_list)
 })
 
 
