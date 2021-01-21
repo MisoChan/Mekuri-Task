@@ -20,6 +20,8 @@
                 details.title
               }}
             </ul>
+
+ 
           </ul>
         </div>
       </div>
@@ -60,7 +62,8 @@ import { csrfToken } from "rails-ujs";
 export default {
   data: function() {
     return {
-      tasklist: [],
+     
+     tasklist: [],
     };
   },
   //DOMが出来上がる前にやっとく処理
