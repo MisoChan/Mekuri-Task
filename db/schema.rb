@@ -69,6 +69,13 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
     t.uuid "created_user_uuid", null: false, comment: "作成ユーザID"
   end
 
+  create_table "t_task_records", id: :uuid, default: nil, comment: "タスク実績テーブル", force: :cascade do |t|
+    t.datetime "record_time", precision: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "created_user_uuid", null: false, comment: "作成ユーザID"
+  end
+
   create_table "t_task_user_linking", primary_key: ["task_uuid", "user_system_uuid"], comment: "ユーザ参加者テーブル", force: :cascade do |t|
     t.uuid "user_system_uuid", null: false, comment: "ユーザシステムUID"
     t.uuid "task_uuid", null: false, comment: "タスクUID"
@@ -79,6 +86,7 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
 
   add_foreign_key "t_task_head_plan_linking", "t_task_plan_headers", column: "t_task_plan_headers_id", name: "t_task_head_plan_linking_fk", on_delete: :cascade
   add_foreign_key "t_task_head_plan_linking", "t_task_plan_lists", column: "t_task_plan_lists_id", name: "t_task_head_plan_linking_fk_1"
+  add_foreign_key "t_task_records", "t_task_plan_lists", column: "id", name: "t_task_records_fk", on_delete: :cascade
 
   create_view "task_plan_lists", sql_definition: <<-SQL
       SELECT t_task_head_plan_linking.t_task_plan_lists_id AS id,
