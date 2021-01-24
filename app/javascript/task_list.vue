@@ -1,13 +1,14 @@
 <template>
   <div class="row">
     <!-- メイン部分  -->
-    <div class="col-9">
+    <div id="task_lists"  class="col-9">
       <!-- タスク一覧部分 -->
       <div v-for="item in tasklist" v-bind:key="item.id">
         <div class="tasks">
           <ul style="list-style:none">
             <li class="task_header_li">
-              <span class="task_header">{{ item.title }}</span>
+              <input type="checkbox" class="taskheader_checkbox" v-bind:id="item.id" v-bind:value="item.id" @click="checkHeaders(item.id)" > 
+              <label for="checkdone"> {{item.title }} </label>
             </li>
 
             <ul
@@ -16,15 +17,16 @@
               style="list-style:none"
               class="task_detail"
             >
-              {{
-                details.title
-              }}
+   
+            <input type="checkbox" class="tasklist_checkbox" v-bind:id="details.id" v-bind:value="details.id" v-bind:data-task-header="item.id" >
+              <label for="checkdone"> {{ details.title }} </label>
             </ul>
-
- 
+          
+          
           </ul>
         </div>
       </div>
+      
     </div>
 
     <div class="col-3 right">
@@ -62,9 +64,29 @@ import { csrfToken } from "rails-ujs";
 export default {
   data: function() {
     return {
-     
+     checkdone: [],
      tasklist: [],
     };
+  },
+  methods: {
+    //ヘッダがチェックされたときに発火するやつ。
+    checkHeaders(headid){
+      const headerelem = document.getElementById(headid);
+
+      //ヘッダのチェックがFalseの場合のみチェックをつける。
+      if(headerelem.checked != false){
+        this.checkPlanListByHeaderId(headid);
+      }
+      
+    },
+    checkPlanListByHeaderId(dataval){
+      const elems = document.getElementById("task_lists").querySelectorAll('[data-task-header="'+dataval+'"]');
+      for(let i = 0;i < elems.length; i++){
+        
+        elems[i].checked=true
+      }
+    }
+  
   },
   //DOMが出来上がる前にやっとく処理
   created() {
@@ -78,4 +100,7 @@ export default {
   //DOMが出来上がった時点の処理
   mounted() {},
 };
+function submit() {
+  
+}
 </script>
