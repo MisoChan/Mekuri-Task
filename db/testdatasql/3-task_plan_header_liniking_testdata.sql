@@ -16,7 +16,7 @@ from
 	
 
 INSERT INTO public.t_task_head_plan_linking
-(t_task_plan_headers_id, t_task_plan_id, updated_at, created_at, created_user_uuid)
+(t_task_plan_headers_id, t_task_plan_lists_id, updated_at, created_at, created_user_uuid)
 
 
 	

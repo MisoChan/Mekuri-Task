@@ -70,7 +70,8 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
   end
 
   create_table "t_task_records", id: :uuid, default: nil, comment: "タスク実績テーブル", force: :cascade do |t|
-    t.datetime "record_time", precision: 0
+    t.datetime "end_time", precision: 0, null: false
+    t.datetime "start_time", precision: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.uuid "created_user_uuid", null: false, comment: "作成ユーザID"
