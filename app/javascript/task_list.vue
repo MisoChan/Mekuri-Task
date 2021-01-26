@@ -80,11 +80,24 @@ export default {
       
     },
     checkPlanListByHeaderId(dataval){
-      const elems = document.getElementById("task_lists").querySelectorAll('[data-task-header="'+dataval+'"]');
+      const planelement = document.getElementById(planid);
+      const elems = this.getTaskHeaderElem(dataval);
       for(let i = 0;i < elems.length; i++){
         
-        elems[i].checked=true
+        elems[i].checked=true;
       }
+    },
+    //内容チェックボックスが押されたときの処理
+    planCheckBoxSelected(headid,planid){
+      const headerelement = this.getTaskHeaderElem(dataval);
+      const planelement = document.getElementById(planid);
+      //ヘッダのチェックボックスがTrueかつ、内容のチェックボックスOFFのときはヘッダを自動でOffにする
+      if(headerelement != false){
+        headerelement.checked = false;
+      }
+    },
+    getTaskHeaderElem(dataval){
+      return document.getElementById("task_lists").querySelectorAll('[data-task-header="'+dataval+'"]');
     }
   
   },
