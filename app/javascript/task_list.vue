@@ -1,39 +1,48 @@
 <template>
   <div class="row">
     <!-- メイン部分  -->
-    <div id="task_lists"  class="col-9">
+    <div id="task_lists" class="col-9">
       <!-- タスク一覧部分 -->
       <div v-for="item in tasklist" v-bind:key="item.id">
         <div class="tasks">
-          <ul style="list-style:none">
+          <ul style="list-style: none">
             <li class="task_header_li">
-              <input type="checkbox" class="taskheader_checkbox" v-bind:id="item.id" v-bind:value="item.id" @click="checkHeaders(item.id)" > 
-              <label for="checkdone"> {{item.title }} </label>
+              <input
+                type="checkbox"
+                class="taskheader_checkbox"
+                v-bind:id="item.id"
+                v-bind:value="item.id"
+                @click="checkHeaders(item.id)"
+              />
+              <label for="checkdone"> {{ item.title }} </label>
             </li>
 
             <ul
               v-for="details in item.task_plan_lists"
               v-bind:key="details.id"
-              style="list-style:none"
+              style="list-style: none"
               class="task_detail"
             >
-   
-            <input type="checkbox" class="tasklist_checkbox" v-bind:id="details.id" v-bind:value="details.id" v-bind:data-task-header="item.id" >
+              <input
+                type="checkbox"
+                class="tasklist_checkbox"
+                v-bind:id="details.id"
+                v-bind:value="details.id"
+                v-bind:data-task-header="item.id"
+                @change="planCheckBoxSelected(item.id, details.id)"
+              />
               <label for="checkdone"> {{ details.title }} </label>
             </ul>
-          
-          
           </ul>
         </div>
       </div>
-      
     </div>
 
     <div class="col-3 right">
       <ul
         id="right-sidebar"
         class="nav-sidebar"
-        style="list-style: none; padding-left: 0;"
+        style="list-style: none; padding-left: 0"
       >
         <li class="mt-1">
           <div id="calender">
@@ -44,7 +53,6 @@
         <li class="mt-5">
           <div id="time_clock">
             <a href="#">ここに現在時刻</a>
-           
           </div>
         </li>
 
@@ -62,44 +70,59 @@
 import axios from "axios";
 import { csrfToken } from "rails-ujs";
 export default {
-  data: function() {
+  data: function () {
     return {
-     checkdone: [],
-     tasklist: [],
+      checkdone: [],
+      tasklist: [],
     };
   },
   methods: {
     //ヘッダがチェックされたときに発火するやつ。
-    checkHeaders(headid){
-      const headerelem = document.getElementById(headid);
+    checkHeaders(headid) {
+      let headerelem = document.getElementById(headid);
 
       //ヘッダのチェックがFalseの場合のみチェックをつける。
-      if(headerelem.checked != false){
+      if (headerelem.checked != false) {
         this.checkPlanListByHeaderId(headid);
       }
-      
-    },
-    checkPlanListByHeaderId(dataval){
-      const planelement = document.getElementById(planid);
-      const elems = this.getTaskHeaderElem(dataval);
-      for(let i = 0;i < elems.length; i++){
-        
-        elems[i].checked=true;
+            //チェックをつけたときだけ子要素のチェックを完了させる
+      let elems = this.getTaskHeaderElem(dataval);
+      for (let i = 0; i < elems.length; i++) {
+        elems[i].checked = true;
       }
+
+    },
+    //ヘッダIDチェック時の処理
+    checkPlanListByHeaderId(dataval) {
+
     },
     //内容チェックボックスが押されたときの処理
-    planCheckBoxSelected(headid,planid){
-      const headerelement = this.getTaskHeaderElem(dataval);
-      const planelement = document.getElementById(planid);
-      //ヘッダのチェックボックスがTrueかつ、内容のチェックボックスOFFのときはヘッダを自動でOffにする
-      if(headerelement != false){
-        headerelement.checked = false;
+    planCheckBoxSelected(headid, planid) {
+      let headerelement = document.getElementById(headid);
+      let planelement = document.getElementById(planid);
+
+      //ヘッダのチェックボックスがfalseかつ、内容のチェックボックスOFFのときはヘッダを自動でOffにする
+      if ((planelement.checked != true) & (headerelement.checked != true)) {
+        headerelement.checked = true;
       }
+      let elems = this.getTaskHeaderElem(headid);
+      let allchecked = false;
+      let counts = 0;
+      for (let i = 0; i < elems.length; i++) {
+        //TRUEならカウントに追加
+        counts = elems[i].checked ? counts + 1 : counts;
+      }
+      //総数がカウントと同数ならヘッダチェックをつける
+      allchecked = counts === elems.length;
+
+      headerelement.checked = allchecked;
     },
-    getTaskHeaderElem(dataval){
-      return document.getElementById("task_lists").querySelectorAll('[data-task-header="'+dataval+'"]');
-    }
-  
+    //タスクヘッダの要素を取得する
+    getTaskHeaderElem(dataval) {
+      return document
+        .getElementById("task_lists")
+        .querySelectorAll('[data-task-header="' + dataval + '"]');
+    },
   },
   //DOMが出来上がる前にやっとく処理
   created() {
@@ -113,7 +136,5 @@ export default {
   //DOMが出来上がった時点の処理
   mounted() {},
 };
-function submit() {
-  
-}
+
 </script>
