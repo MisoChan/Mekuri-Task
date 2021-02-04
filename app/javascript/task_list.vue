@@ -1,7 +1,15 @@
 <template>
   <div class="row">
+   
+   
     <!-- メイン部分  -->
     <div id="task_lists" class="col-9">
+
+       <!-- タスク入力部分 -->
+      <div id="task_input_box" class="tasks">
+        
+      </div>
+      
       <!-- タスク一覧部分 -->
       <div v-for="item in tasklist" v-bind:key="item.id">
         <div class="tasks">
@@ -12,7 +20,7 @@
                 class="taskheader_checkbox"
                 v-bind:id="item.id"
                 v-bind:value="item.id"
-                @click="checkHeaders(item.id)"
+                @change="checkHeaders(item.id)"
               />
               <label for="checkdone"> {{ item.title }} </label>
             </li>
@@ -80,21 +88,20 @@ export default {
     //ヘッダがチェックされたときに発火するやつ。
     checkHeaders(headid) {
       let headerelem = document.getElementById(headid);
-
       //ヘッダのチェックがFalseの場合のみチェックをつける。
       if (headerelem.checked != false) {
-        this.checkPlanListByHeaderId(headid);
+        this.checkPlanListByHeaderId(headid,true);
       }
-            //チェックをつけたときだけ子要素のチェックを完了させる
-      let elems = this.getTaskHeaderElem(dataval);
-      for (let i = 0; i < elems.length; i++) {
-        elems[i].checked = true;
-      }
+
 
     },
     //ヘッダIDチェック時の処理
-    checkPlanListByHeaderId(dataval) {
-
+    checkPlanListByHeaderId(dataval,checked) {
+      //チェックをつけたときだけ子要素のチェックを完了させる
+      let elems = this.getTaskHeaderElem(dataval);
+      for (let i = 0; i < elems.length; i++) {
+        elems[i].checked = checked;
+      }
     },
     //内容チェックボックスが押されたときの処理
     planCheckBoxSelected(headid, planid) {
