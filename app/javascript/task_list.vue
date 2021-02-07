@@ -1,15 +1,60 @@
 <template>
   <div class="row">
-   
-   
     <!-- メイン部分  -->
     <div id="task_lists" class="col-9">
-
-       <!-- タスク入力部分 -->
+      <!-- タスク入力部分 -->
       <div id="task_input_box" class="tasks">
-        
+        <ul style="list-style: none">
+          <li class="task_input_li">
+            <div class="form-group">
+              <input
+                type="text"
+                id="taskhead_titleinput"
+                class="col-11"
+                placeholder="タスク タイトル"
+              />
+              <li class="task_input_li">
+                <input
+                  type="text"
+                  id="taskhead_dateinput_from "
+                  class="task_input_date"
+                  placeholder="開始日"
+                />
+                <input
+                  type="text"
+                  id="taskhead_timeinput_from"
+                  class="task_input_times"
+                  placeholder="開始時間"
+                />
+                - >
+                <input
+                  type="text"
+                  id="taskhead_dateinput_to"
+                  class="task_input_date"
+                   placeholder="終了日"
+                />
+                <input
+                  type="text"
+                  id="taskhead_timeinput_to"
+                  class="task_input_times"
+                  placeholder="終了時間"
+                />
+              </li>
+            </div>
+          </li>
+          <ul style="list-style: none">
+
+            <li class="task_input_li">
+              <input type="text" id="taskhead_plansinput" class="col-9" placeholder="内容を入力…" />
+              <input type="text" id="taskhead_time_spend" class="col-2" placeholder="所要時間（分）" />
+            </li>
+          </ul>
+        </ul>
+        <div class="text-right">
+          <button type="button" class="btn btn-primary ">登録</button>
+        </div>
       </div>
-      
+
       <!-- タスク一覧部分 -->
       <div v-for="item in tasklist" v-bind:key="item.id">
         <div class="tasks">
@@ -78,7 +123,7 @@
 import axios from "axios";
 import { csrfToken } from "rails-ujs";
 export default {
-  data: function () {
+  data: function() {
     return {
       checkdone: [],
       tasklist: [],
@@ -90,13 +135,11 @@ export default {
       let headerelem = document.getElementById(headid);
       //ヘッダのチェックがFalseの場合のみチェックをつける。
       if (headerelem.checked != false) {
-        this.checkPlanListByHeaderId(headid,true);
+        this.checkPlanListByHeaderId(headid, true);
       }
-
-
     },
     //ヘッダIDチェック時の処理
-    checkPlanListByHeaderId(dataval,checked) {
+    checkPlanListByHeaderId(dataval, checked) {
       //チェックをつけたときだけ子要素のチェックを完了させる
       let elems = this.getTaskHeaderElem(dataval);
       for (let i = 0; i < elems.length; i++) {
@@ -143,5 +186,4 @@ export default {
   //DOMが出来上がった時点の処理
   mounted() {},
 };
-
 </script>
