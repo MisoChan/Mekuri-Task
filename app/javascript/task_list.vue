@@ -17,7 +17,7 @@
                 <input
                   type="text"
                   id="taskhead_dateinput_from "
-                  class="task_input_date"
+                  class="task_input_date "
                   placeholder="開始日"
                 />
                 <input
@@ -42,13 +42,14 @@
               </li>
             </div>
           </li>
-          <ul style="list-style: none">
+          
+          <li class="task_input_li">
+            <button type="button" class="btn btn-primary" >追加</button>
+            <input type="text" id="taskhead_plansinput" class="col-8" placeholder="内容を入力…" />
+            <input type="text" id="taskhead_time_spend" class="col-2" placeholder="所要時間（分）" />
+          </li>
 
-            <li class="task_input_li">
-              <input type="text" id="taskhead_plansinput" class="col-9" placeholder="内容を入力…" />
-              <input type="text" id="taskhead_time_spend" class="col-2" placeholder="所要時間（分）" />
-            </li>
-          </ul>
+       
         </ul>
         <div class="text-right">
           <button type="button" class="btn btn-primary ">登録</button>
@@ -67,7 +68,7 @@
                 v-bind:value="item.id"
                 @change="checkHeaders(item.id)"
               />
-              <label for="checkdone"> {{ item.title }} </label>
+              <label for="checkdone" class="task_head_text"> {{ item.title }} </label>
             </li>
 
             <ul
@@ -84,7 +85,7 @@
                 v-bind:data-task-header="item.id"
                 @change="planCheckBoxSelected(item.id, details.id)"
               />
-              <label for="checkdone"> {{ details.title }} </label>
+              <label for="checkdone" class="task_detail_text" > {{ details.title }} </label>
             </ul>
           </ul>
         </div>
