@@ -67,5 +67,8 @@ gem 'bootstrap'
 gem "jquery-rails"  
 gem "jquery-ui-rails"
 
+#JSON Validation
+gem 'json-schema'
+
 #scenic
 gem 'scenic'
