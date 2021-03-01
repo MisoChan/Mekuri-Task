@@ -70,11 +70,17 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
   end
 
   create_table "t_task_records", id: :uuid, default: nil, comment: "タスク実績テーブル", force: :cascade do |t|
-    t.datetime "end_time", precision: 0, null: false
-    t.datetime "start_time", precision: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.date "record_time", null: false, comment: "記録時間"
+    t.datetime "created_at", null: false, comment: "作成時間"
+    t.datetime "updated_at", null: false, comment: "更新日時"
     t.uuid "created_user_uuid", null: false, comment: "作成ユーザID"
+    t.datetime "start_time", precision: 0, comment: "実記録開始時間"
+    t.datetime "end_time", precision: 0, comment: "実記録終了時間"
+    t.string "task_head_title", comment: "タスクヘッダタイトル"
+    t.uuid "t_task_head_id", null: false, comment: "タスクヘッダUUID"
+    t.string "task_plan_title", comment: "タスクヘッダタイトル"
+    t.string "t_task_plan_memo", comment: "タスク内容メモ"
+    t.uuid "task_plan_uuid", null: false, comment: "タスク内容UUID"
   end
 
   create_table "t_task_user_linking", primary_key: ["task_uuid", "user_system_uuid"], comment: "ユーザ参加者テーブル", force: :cascade do |t|
