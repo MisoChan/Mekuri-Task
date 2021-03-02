@@ -42,13 +42,17 @@
               </li>
             </div>
           </li>
-          
+          <hr>
           <li class="task_input_li">
-            <button type="button" class="btn btn-primary" >追加</button>
-            <input type="text" id="taskhead_plansinput" class="col-8" placeholder="内容を入力…" />
+            
+            <input type="text" id="taskhead_plansinput" class="col-9" placeholder="内容を入力…" />
             <input type="text" id="taskhead_time_spend" class="col-2" placeholder="所要時間（分）" />
+            <br/>
+            <input type="text" id="taskhead_plansinput" class="col-11" placeholder="メモを入力…" />
+            <br>
+            <button type="button" class="btn btn-primary" >追加</button>
           </li>
-
+         
        
         </ul>
         <div class="text-right">
@@ -58,9 +62,14 @@
 
       <!-- タスク一覧部分 -->
       <div v-for="item in tasklist" v-bind:key="item.id">
+
         <div class="tasks">
+          <label for="checkdone" class="task_head_text"> {{ item.order_num }} 番目 </label>
           <ul style="list-style: none">
+
+           
             <li class="task_header_li">
+              
               <input
                 type="checkbox"
                 class="taskheader_checkbox"
