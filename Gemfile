@@ -11,7 +11,7 @@ Encoding.default_internal = Encoding::UTF_8
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
+gem 'rails', '~> 6.0.3', '>= 6.0.3.5'
 # Use postgres as the database for Active Record
 gem 'pg'
 # Use Puma as the app server
