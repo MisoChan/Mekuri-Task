@@ -1,8 +1,7 @@
 
 class TaskListsController < ApplicationController
   before_action :set_task_list, only: [:show, :edit, :update, :destroy]
-  require './app/modules/tasklist_logic'
-  include Tasklist_logic
+  
   # GET /task_lists
   # GET /task_lists.json
   def index
@@ -12,7 +11,7 @@ class TaskListsController < ApplicationController
   # GET /task_lists/1
   # GET /task_lists/1.json
   def show
-    result = Tasklist_logic.getList
+    result = Tasklist_logic::getList()
     render json: result.to_json(:include => :task_plan_lists)
   end
 

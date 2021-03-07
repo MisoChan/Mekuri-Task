@@ -72,3 +72,7 @@ gem 'json-schema'
 
 #scenic
 gem 'scenic'
+
+#mongoid+session
+gem "mongoid"
+gem "mongo_session_store"

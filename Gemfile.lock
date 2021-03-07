@@ -67,6 +67,7 @@ GEM
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
+    bson (4.12.0)
     builder (3.2.4)
     byebug (11.1.3)
     capybara (3.33.0)
@@ -112,6 +113,14 @@ GEM
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.14.2)
+    mongo (2.14.0)
+      bson (>= 4.8.2, < 5.0.0)
+    mongo_session_store (3.2.1)
+      actionpack (>= 4.0)
+      mongo (~> 2.0)
+    mongoid (7.2.1)
+      activemodel (>= 5.1, < 6.2)
+      mongo (>= 2.10.5, < 3.0.0)
     msgpack (1.3.3)
     nio4r (2.5.4)
     nokogiri (1.10.10)
@@ -226,6 +235,8 @@ DEPENDENCIES
   jquery-ui-rails
   json-schema
   listen (~> 3.2)
+  mongo_session_store
+  mongoid
   pg
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.2)
