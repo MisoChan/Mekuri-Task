@@ -226,6 +226,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   bootsnap (>= 1.4.2)
   bootstrap
   byebug
