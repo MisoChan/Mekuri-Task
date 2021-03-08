@@ -40,6 +40,9 @@
                   placeholder="終了時間"
                 />
               </li>
+              <li>
+                 <input type="text" id="taskhead_plansinput" class="col-11" placeholder="メモを入力…" />
+              </li>
             </div>
           </li>
           <hr>
@@ -48,7 +51,7 @@
             <input type="text" id="taskhead_plansinput" class="col-9" placeholder="内容を入力…" />
             <input type="text" id="taskhead_time_spend" class="col-2" placeholder="所要時間（分）" />
             <br/>
-            <input type="text" id="taskhead_plansinput" class="col-11" placeholder="メモを入力…" />
+           
             <br>
             <button type="button" class="btn btn-primary" >追加</button>
           </li>
