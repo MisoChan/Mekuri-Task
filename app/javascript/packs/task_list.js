@@ -10,13 +10,14 @@ import App from '../task_list.vue'
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  
+ 
   const task_list = new Vue({
     render: h => h(App)
   }).$mount()
+  
   document.body.appendChild(task_list.$el)
 
-  console.log(task_list)
+
 })
 
 

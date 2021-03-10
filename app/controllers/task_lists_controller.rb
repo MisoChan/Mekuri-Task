@@ -26,17 +26,17 @@ class TaskListsController < TaskBaseController
   # POST /task_lists
   # POST /task_lists.json
   def create
-    @task_list = TaskList.new(task_list_params)
-
-    respond_to do |format|
-      if @task_list.save
-        format.html { redirect_to @task_list, notice: 'Task list was successfully created.' }
-        format.json { render :show, status: :created, location: @task_list }
-      else
-        format.html { render :new }
-        format.json { render json: @task_list.errors, status: :unprocessable_entity }
-      end
-    end
+    # @task_list = TaskList.new(task_list_params)
+    print(params["task_title"])
+    # respond_to do |format|
+    #   if @task_list.save
+    #     format.html { redirect_to @task_list, notice: 'Task list was successfully created.' }
+    #     format.json { render :show, status: :created, location: @task_list }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @task_list.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /task_lists/1
