@@ -1,6 +1,6 @@
 class TaskBaseController < ApplicationController
 
-  include Tasklistlogic
+  include TasklistControllable
 
 
 

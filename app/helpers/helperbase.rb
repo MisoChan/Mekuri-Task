@@ -1,0 +1,2 @@
+class helperbase
+end

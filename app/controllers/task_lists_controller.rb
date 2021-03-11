@@ -10,7 +10,8 @@ class TaskListsController < TaskBaseController
   # GET /task_lists/1
   # GET /task_lists/1.json
   def show
-    result = getlist
+    #リスト項目の取得
+    result = getlist()
     render json: result.to_json(:include => :task_plan_lists)
   end
 

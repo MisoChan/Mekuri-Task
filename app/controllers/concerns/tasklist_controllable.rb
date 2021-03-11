@@ -1,6 +1,6 @@
 
 
-module Tasklistlogic
+module TasklistControllable
     extend ActiveSupport::Concern
 
     def getlist()
@@ -9,6 +9,7 @@ module Tasklistlogic
 
 
     def addplan()
+        TTaskPlanHeader.set
     end
 
     def setplan()
