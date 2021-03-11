@@ -4,6 +4,21 @@
     <div id="task_lists" class="col-9">
       <!-- タスク入力部分 -->
       <div id="task_input_box" class="tasks">
+        <div id="head_title table-responsive">
+          <table class="table table-borderless ">
+            <tr >
+              <td class="col-10">
+                {{today}} のタスク一覧
+              </td>
+              
+              <td  align="right" >
+                + ADD TASK 
+              </td>
+            </tr>
+          </table>
+
+          <hr />
+        </div>
         <ul style="list-style: none">
           <li class="task_input_li">
             <div class="form-group">
@@ -13,7 +28,8 @@
                 class="col-11"
                 placeholder="タスク タイトル"
               />
-              <li class="task_input_li">
+              <li class="task_input_li ">
+                <div style="text-align: right;">
                 <input
                   type="text"
                   id="taskhead_dateinput_from "
@@ -31,7 +47,7 @@
                   type="text"
                   id="taskhead_dateinput_to"
                   class="task_input_date"
-                   placeholder="終了日"
+                  placeholder="終了日"
                 />
                 <input
                   type="text"
@@ -39,40 +55,51 @@
                   class="task_input_times"
                   placeholder="終了時間"
                 />
+                </div>
               </li>
               <li>
-                 <input type="text" id="taskhead_plansinput" class="col-11" placeholder="メモを入力…" />
+                <input
+                  type="text"
+                  id="taskhead_plansinput"
+                  class="col-11"
+                  placeholder="メモを入力…"
+                />
               </li>
             </div>
           </li>
-          <hr>
+          <hr />
           <li class="task_input_li">
-            
-            <input type="text" id="taskhead_plansinput" class="col-9" placeholder="内容を入力…" />
-            <input type="text" id="taskhead_time_spend" class="col-2" placeholder="所要時間（分）" />
-            <br/>
-           
-            <br>
-            <button type="button" class="btn btn-primary" >追加</button>
+            <input
+              type="text"
+              id="taskhead_plansinput"
+              class="col-9"
+              placeholder="内容を入力…"
+            />
+            <input
+              type="text"
+              id="taskhead_time_spend"
+              class="col-2"
+              placeholder="所要時間（分）"
+            />
+            <br />
+
+            <br />
+            <button type="button" class="btn btn-primary">追加</button>
           </li>
-         
-       
         </ul>
         <div class="text-right">
-          <button type="button" class="btn btn-primary ">登録</button>
+          <button type="button" class="btn btn-primary " @click="sendAddTaskRequest()">登録</button>
         </div>
       </div>
 
       <!-- タスク一覧部分 -->
       <div v-for="item in tasklist" v-bind:key="item.id">
-
         <div class="tasks">
-          <label for="checkdone" class="task_head_text"> {{ item.order_num }} 番目 </label>
+          <label for="checkdone" class="task_head_text">
+            {{ item.order_num }} 番目
+          </label>
           <ul style="list-style: none">
-
-           
             <li class="task_header_li">
-              
               <input
                 type="checkbox"
                 class="taskheader_checkbox"
@@ -80,7 +107,9 @@
                 v-bind:value="item.id"
                 @change="checkHeaders(item.id)"
               />
-              <label for="checkdone" class="task_head_text"> {{ item.title }} </label>
+              <label for="checkdone" class="task_head_text">
+                {{ item.title }}
+              </label>
             </li>
 
             <ul
@@ -97,7 +126,9 @@
                 v-bind:data-task-header="item.id"
                 @change="planCheckBoxSelected(item.id, details.id)"
               />
-              <label for="checkdone" class="task_detail_text" > {{ details.title }} </label>
+              <label for="checkdone" class="task_detail_text">
+                {{ details.title }}
+              </label>
             </ul>
           </ul>
         </div>
@@ -140,11 +171,12 @@ export default {
     return {
       checkdone: [],
       tasklist: [],
+      today:(new Date()).toLocaleString()
     };
   },
   methods: {
     //ヘッダがチェックされたときに発火するやつ。
-    checkHeaders(headid) {
+    checkHeaders: function(headid) {
       let headerelem = document.getElementById(headid);
       //ヘッダのチェックがFalseの場合のみチェックをつける。
       if (headerelem.checked != false) {
@@ -186,6 +218,23 @@ export default {
         .getElementById("task_lists")
         .querySelectorAll('[data-task-header="' + dataval + '"]');
     },
+    //タスクリストの登録処理
+    sendAddTaskRequest: function(){
+      var task_title_txt = document.getElementById('taskhead_titleinput').value;
+ 
+      console.log(task_title_txt);
+
+      axios.defaults.headers.common = {
+         'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+      }
+      axios.post("/task_lists",{
+        task_title: task_title_txt
+      }    
+      );
+     
+    },
+
   },
   //DOMが出来上がる前にやっとく処理
   created() {
@@ -197,6 +246,8 @@ export default {
   },
 
   //DOMが出来上がった時点の処理
-  mounted() {},
+  mounted() {
+
+  },
 };
 </script>

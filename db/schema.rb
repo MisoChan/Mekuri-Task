@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2020_11_08_083213) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.uuid "created_user_uuid", null: false
+    t.string "task_memo", limit: 800
   end
 
   create_table "t_task_plan_lists", id: :uuid, default: nil, comment: "タスク予定内容テーブル", force: :cascade do |t|
