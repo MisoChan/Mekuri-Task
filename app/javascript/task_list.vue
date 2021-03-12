@@ -68,24 +68,23 @@
             </div>
           </li>
           <hr />
-          <li class="task_input_li">
+          <li class="task_input_li task_plans" data-task-plan-="" >
+            
             <input
               type="text"
-              id="taskhead_plansinput"
+              id="task_plan_detail"
               class="col-9"
               placeholder="内容を入力…"
             />
             <input
               type="text"
-              id="taskhead_time_spend"
+              id="task_plan_time"
               class="col-2"
               placeholder="所要時間（分）"
             />
-            <br />
-
-            <br />
-            <button type="button" class="btn btn-primary">追加</button>
+            <button type="button" class="btn btn-primary" @click="deleteTaskPlanLists()">削除</button>
           </li>
+          <button type="button" class="btn btn-primary" @click="dupeTaskPlanLists()">追加</button>
         </ul>
         <div class="text-right">
           <button type="button" class="btn btn-primary " @click="sendAddTaskRequest()">登録</button>
@@ -217,6 +216,12 @@ export default {
       return document
         .getElementById("task_lists")
         .querySelectorAll('[data-task-header="' + dataval + '"]');
+    },
+    dupeTaskPlanLists(){
+      var plans = document.getElementsByClassName("task_plans");
+      console.log(plans);
+      var plans_child = plans[plans.length - 1].cloneNode(true);
+      plans[plans.length - 1].appendChild(plans_child);
     },
     //タスクリストの登録処理
     sendAddTaskRequest: function(){
