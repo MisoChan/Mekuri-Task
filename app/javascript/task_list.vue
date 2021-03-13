@@ -68,7 +68,7 @@
             </div>
           </li>
           <hr />
-          <li class="task_input_li task_plans" data-task-plan-="" >
+          <li class="task_input_li task_plans" data-planid="0" >
             
             <input
               type="text"
@@ -82,7 +82,7 @@
               class="col-2"
               placeholder="所要時間（分）"
             />
-            <button type="button" class="btn btn-primary" @click="deleteTaskPlanLists()">削除</button>
+            <button type="button" class="btn btn-primary" @click="deleteTaskPlan()">削除</button>
           </li>
           <button type="button" class="btn btn-primary" @click="dupeTaskPlanLists()">追加</button>
         </ul>
@@ -219,9 +219,19 @@ export default {
     },
     dupeTaskPlanLists(){
       var plans = document.getElementsByClassName("task_plans");
-      console.log(plans);
+      
       var plans_child = plans[plans.length - 1].cloneNode(true);
+     
+      //削除時に使うデータ属性を設定
+      plans_child.dataset.planid = plans.length;
+      
+      //削除ボタンにも同じデータ属性を設定する
+
       plans[plans.length - 1].appendChild(plans_child);
+
+    },
+    deleteTaskPlan(){
+
     },
     //タスクリストの登録処理
     sendAddTaskRequest: function(){
