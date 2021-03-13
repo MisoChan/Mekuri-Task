@@ -82,9 +82,14 @@
               class="col-2"
               placeholder="所要時間（分）"
             />
-            <button type="button" class="btn btn-primary" @click="deleteTaskPlan()">削除</button>
+            <button type="button" class="btn btn-primary plan_delete"  @click="deleteTaskPlan">削除</button>
           </li>
-          <button type="button" class="btn btn-primary" @click="dupeTaskPlanLists()">追加</button>
+         
+        </ul>
+        <ul style="list-style: none">
+           <li class="task_input_li" > 
+            <button type="button" class="btn btn-primary" @click="dupeTaskPlanLists()">追加</button>
+          </li>  
         </ul>
         <div class="text-right">
           <button type="button" class="btn btn-primary " @click="sendAddTaskRequest()">登録</button>
@@ -217,6 +222,7 @@ export default {
         .getElementById("task_lists")
         .querySelectorAll('[data-task-header="' + dataval + '"]');
     },
+
     dupeTaskPlanLists(){
       var plans = document.getElementsByClassName("task_plans");
       
@@ -225,13 +231,26 @@ export default {
       //削除時に使うデータ属性を設定
       plans_child.dataset.planid = plans.length;
       
-      //削除ボタンにも同じデータ属性を設定する
+    
 
-      plans[plans.length - 1].appendChild(plans_child);
+      //要素自体にも同じデータ属性を設定する
+      plans[plans.length - 1].parentElement.appendChild(plans_child);
+        
+      //押すたびに削除ボタンイベントを設定する
+     var deleteBtnClass = document.querySelectorAll(".plan_delete");
+     deleteBtnClass[deleteBtnClass.length-1].addEventListener('click',this.deleteTaskPlan);
 
     },
-    deleteTaskPlan(){
+    //タスク内容の削除を行う。
+    deleteTaskPlan:function (e){
+      //押された削除ボタンの要素を取得する
+      var clickedbtn = e.currentTarget;
 
+      //押されたボタンの親要素を取得する。
+      var parentelem = clickedbtn.parentNode;
+      console.log(parentelem);
+      //取得した親要素に対して削除を行う
+      parentelem.remove();
     },
     //タスクリストの登録処理
     sendAddTaskRequest: function(){
