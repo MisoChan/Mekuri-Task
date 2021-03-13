@@ -175,7 +175,8 @@ export default {
     return {
       checkdone: [],
       tasklist: [],
-      today:(new Date()).toLocaleString()
+      today:(new Date()).toLocaleString(),
+      plans:(document.getElementsByClassName("task_plans")),
     };
   },
   methods: {
@@ -224,17 +225,14 @@ export default {
     },
 
     dupeTaskPlanLists(){
-      var plans = document.getElementsByClassName("task_plans");
       
-      var plans_child = plans[plans.length - 1].cloneNode(true);
+      var plans_child = this.plans[this.plans.length - 1].cloneNode(true);
      
-      //削除時に使うデータ属性を設定
-      plans_child.dataset.planid = plans.length;
-      
-    
-
+      //データ属性を設定
+      plans_child.dataset.planid = this.plans.length;
+      plans_child.style.display = ""
       //要素自体にも同じデータ属性を設定する
-      plans[plans.length - 1].parentElement.appendChild(plans_child);
+      this.plans[this.plans.length - 1].parentElement.appendChild(plans_child);
         
       //押すたびに削除ボタンイベントを設定する
      var deleteBtnClass = document.querySelectorAll(".plan_delete");
@@ -248,15 +246,22 @@ export default {
 
       //押されたボタンの親要素を取得する。
       var parentelem = clickedbtn.parentNode;
-      console.log(parentelem);
-      //取得した親要素に対して削除を行う
-      parentelem.remove();
+      
+      //もし一番最初の要素の場合は削除じゃなくて全部カラにしたうえでhidden設定
+      if(this.plans.length === 1){
+        parentelem.style.display = "none"
+      }else{
+        //取得した親要素に対して削除を行う
+        parentelem.remove();
+      }
+
+      
+      
     },
     //タスクリストの登録処理
     sendAddTaskRequest: function(){
       var task_title_txt = document.getElementById('taskhead_titleinput').value;
- 
-      console.log(task_title_txt);
+
 
       axios.defaults.headers.common = {
          'X-Requested-With': 'XMLHttpRequest',
