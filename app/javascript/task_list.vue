@@ -35,6 +35,7 @@
                   id="taskhead_dateinput_from "
                   class="task_input_date "
                   placeholder="開始日"
+                  
                 />
                 <input
                   type="text"
@@ -68,23 +69,25 @@
             </div>
           </li>
           <hr />
-          <li class="task_input_li task_plans" data-planid="0" >
-            
-            <input
-              type="text"
-              id="task_plan_detail"
-              class="col-9"
-              placeholder="内容を入力…"
-            />
-            <input
-              type="text"
-              id="task_plan_time"
-              class="col-2"
-              placeholder="所要時間（分）"
-            />
-            <button type="button" class="btn btn-primary plan_delete"  @click="deleteTaskPlan">削除</button>
-          </li>
-         
+          <div v-for="(plan,index) in taskplans" v-bind:key="plan.key">
+            <li class="task_input_li task_plans" data-planid="plans.key"  >
+              
+              <input
+                type="text"
+                class="col-9"
+                v-model="plan.title"
+                placeholder="内容を入力…"
+              />
+              <input
+                type="text"
+                id="task_plan_time"
+                class="col-2"
+                v-model="plan.reqtime"
+                placeholder="所要時間（分）"
+              />
+              <button type="button" class="btn btn-primary plan_delete"  @click="deleteTaskPlan(index)">削除</button>
+            </li>
+          </div>
         </ul>
         <ul style="list-style: none">
            <li class="task_input_li" > 
@@ -139,7 +142,7 @@
       </div>
     </div>
 
-    <div class="col-3 right">
+    <div class="col-2 right">
       <ul
         id="right-sidebar"
         class="nav-sidebar"
@@ -175,8 +178,15 @@ export default {
     return {
       checkdone: [],
       tasklist: [],
+      taskplans: [
+        { key: 0,
+        title: "",
+        reqtime:"" }
+        ],
+
+      
       today:(new Date()).toLocaleString(),
-      plans:(document.getElementsByClassName("task_plans")),
+    
     };
   },
   methods: {
@@ -226,37 +236,22 @@ export default {
 
     dupeTaskPlanLists(){
       
-      var plans_child = this.plans[this.plans.length - 1].cloneNode(true);
-     
-      //データ属性を設定
-      plans_child.dataset.planid = this.plans.length;
-      plans_child.style.display = ""
-      //要素自体にも同じデータ属性を設定する
-      this.plans[this.plans.length - 1].parentElement.appendChild(plans_child);
-        
-      //押すたびに削除ボタンイベントを設定する
-     var deleteBtnClass = document.querySelectorAll(".plan_delete");
-     deleteBtnClass[deleteBtnClass.length-1].addEventListener('click',this.deleteTaskPlan);
+    //   var plans_child = this.plans[this.plans.length - 1].cloneNode(true);
+    var randid = Math.random().toString(36).slice(-8);
+    //
+    var taskplan_datatemplate  = 
+        { key: randid,
+        title: "",
+        reqtime:"" };
+    this.taskplans.push(taskplan_datatemplate);
+
+
+
 
     },
     //タスク内容の削除を行う。
-    deleteTaskPlan:function (e){
-      //押された削除ボタンの要素を取得する
-      var clickedbtn = e.currentTarget;
-
-      //押されたボタンの親要素を取得する。
-      var parentelem = clickedbtn.parentNode;
-      
-      //もし一番最初の要素の場合は削除じゃなくて全部カラにしたうえでhidden設定
-      if(this.plans.length === 1){
-        parentelem.style.display = "none"
-      }else{
-        //取得した親要素に対して削除を行う
-        parentelem.remove();
-      }
-
-      
-      
+    deleteTaskPlan:function (index){
+      this.taskplans.splice(index,1);
     },
     //タスクリストの登録処理
     sendAddTaskRequest: function(){
@@ -270,13 +265,16 @@ export default {
       axios.post("/task_lists",{
         task_title: task_title_txt
       }    
-      );
+      ).then(function (response){
+        console.log(response)
+      });
      
     },
 
   },
   //DOMが出来上がる前にやっとく処理
   created() {
+    
     //タスク一覧リストの取得
     axios.defaults.headers.common = csrfToken();
     axios
