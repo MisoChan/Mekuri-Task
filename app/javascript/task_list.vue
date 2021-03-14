@@ -21,42 +21,50 @@
         </div>
         <ul style="list-style: none">
           <li class="task_input_li">
-            <div class="form-group">
+            <div class="head_timeset">
               <input
                 type="text"
                 id="taskhead_titleinput"
                 class="col-11"
+                v-model="task_head_title"
                 placeholder="タスク タイトル"
               />
               <li class="task_input_li ">
                 <div style="text-align: right;">
-                <input
-                  type="text"
-                  id="taskhead_dateinput_from "
-                  class="task_input_date "
+                  
+                
+                <Datepicker
+                  v-model="task_date_begin"
+                 class="task_input_date_begin"
                   placeholder="開始日"
                   
                 />
+               <span class="task_input_times__begin">
+                
                 <input
                   type="text"
                   id="taskhead_timeinput_from"
+                   v-model="task_date_begin_time"
                   class="task_input_times"
                   placeholder="開始時間"
                 />
+                 </span>
                 - >
-                <input
-                  type="text"
-                  id="taskhead_dateinput_to"
-                  class="task_input_date"
+                <Datepicker
+                  v-model="task_date_end"
+                  class="task_input_date_end"
                   placeholder="終了日"
                 />
                 <input
                   type="text"
                   id="taskhead_timeinput_to"
+                  v-model="task_date_end_time"
                   class="task_input_times"
                   placeholder="終了時間"
                 />
+
                 </div>
+ 
               </li>
               <li>
                 <input
@@ -70,7 +78,7 @@
           </li>
           <hr />
           <div v-for="(plan,index) in taskplans" v-bind:key="plan.key">
-            <li class="task_input_li task_plans" data-planid="plans.key"  >
+            <li class="task_input_li task_plans" data-planid="plan.key"  >
               
               <input
                 type="text"
@@ -91,7 +99,7 @@
         </ul>
         <ul style="list-style: none">
            <li class="task_input_li" > 
-            <button type="button" class="btn btn-primary" @click="dupeTaskPlanLists()">追加</button>
+            <button type="button" class="btn btn-primary" @click="dupeTaskPlanLists()">こまかい内容追加</button>
           </li>  
         </ul>
         <div class="text-right">
@@ -173,9 +181,19 @@
 <script>
 import axios from "axios";
 import { csrfToken } from "rails-ujs";
+import Datepicker from 'vuejs-datepicker';
+
 export default {
+  components : {
+  Datepicker
+  },
   data: function() {
     return {
+      task_head_title: "",
+      task_date_begin: "",
+      task_date_end: "",
+      task_date_begin_time: "",
+      task_date_end_time: "",
       checkdone: [],
       tasklist: [],
       taskplans: [
@@ -183,10 +201,7 @@ export default {
         title: "",
         reqtime:"" }
         ],
-
-      
       today:(new Date()).toLocaleString(),
-    
     };
   },
   methods: {
@@ -233,24 +248,20 @@ export default {
         .getElementById("task_lists")
         .querySelectorAll('[data-task-header="' + dataval + '"]');
     },
-
+    //タスク内容の新規追加を行う。
     dupeTaskPlanLists(){
       
-    //   var plans_child = this.plans[this.plans.length - 1].cloneNode(true);
     var randid = Math.random().toString(36).slice(-8);
-    //
+    
     var taskplan_datatemplate  = 
         { key: randid,
         title: "",
         reqtime:"" };
     this.taskplans.push(taskplan_datatemplate);
 
-
-
-
     },
     //タスク内容の削除を行う。
-    deleteTaskPlan:function (index){
+    deleteTaskPlan(index){
       this.taskplans.splice(index,1);
     },
     //タスクリストの登録処理
@@ -263,7 +274,12 @@ export default {
           'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
       }
       axios.post("/task_lists",{
-        task_title: task_title_txt
+        task_head_title: this.task_head_title,
+        task_date_begin: this.task_date_begin,
+        task_date_end: this.task_date_end,
+        task_date_begin_time: this.task_date_begin_time,
+        task_date_end_time: this.task_date_end_time,
+        task_plans:this.taskplans
       }    
       ).then(function (response){
         console.log(response)

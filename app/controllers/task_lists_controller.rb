@@ -28,14 +28,7 @@ class TaskListsController < TaskBaseController
   # POST /task_lists.json
   def create
     # @task_list = TaskList.new(task_list_params)
-    print(params["task_title"])
-    print(params["task_start_date"])
-    print(params["task_end_date"])
-    print(params["task_start_time"])
-    print(params["task_end_time"])
-    print(params["task_plan"])
-    print(params["task_plan_time"])
-
+    print(params)
     
     # respond_to do |format|
     #   if @task_list.save
