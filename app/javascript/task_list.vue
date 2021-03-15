@@ -40,7 +40,7 @@
                   
                 />
                <span class="task_input_times__begin">
-                
+                <span>
                 <input
                   type="text"
                   id="taskhead_timeinput_from"
@@ -48,8 +48,11 @@
                   class="task_input_times"
                   placeholder="開始時間"
                 />
+                 
+                </span>
+               
                  </span>
-                - >
+                <a>- ></a>
                 <Datepicker
                   v-model="task_date_end"
                   class="task_input_date_end"
