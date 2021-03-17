@@ -34,6 +34,7 @@
                   
                 
                 <Datepicker
+                :format="DatePickerFormat"
                   v-model="task_date_begin"
                  class="task_input_date_begin"
                   placeholder="開始日"
@@ -54,6 +55,7 @@
                  </span>
                 <a>- ></a>
                 <Datepicker
+                  :format="DatePickerFormat"
                   v-model="task_date_end"
                   class="task_input_date_end"
                   placeholder="終了日"
@@ -197,6 +199,7 @@ export default {
       task_date_end: "",
       task_date_begin_time: "",
       task_date_end_time: "",
+      DatePickerFormat: 'yyyy-MM-dd',
       checkdone: [],
       tasklist: [],
       taskplans: [
