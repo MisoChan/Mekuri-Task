@@ -36,7 +36,7 @@
                 <Datepicker
                 :format="DatePickerFormat"
                   v-model="task_date_begin"
-                 class="task_input_date_begin"
+                 class="task_input_date"
                   placeholder="開始日"
                   
                 />
@@ -57,7 +57,7 @@
                 <Datepicker
                   :format="DatePickerFormat"
                   v-model="task_date_end"
-                  class="task_input_date_end"
+                  class="task_input_date"
                   placeholder="終了日"
                 />
                 <input
