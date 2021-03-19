@@ -164,10 +164,9 @@
         <li class="mt-1">
           <div id="calender">
              <v-date-picker
-             
+                :Format=Datepicker
                   v-model="today"
-                 class="task_input_date"
-
+                  is-required
                   
                 />
           </div>
@@ -200,6 +199,7 @@ export default {
 
   },
   data: function() {
+    
     return {
       task_head_title: "",
       task_date_begin: "",
@@ -214,7 +214,10 @@ export default {
         title: "",
         reqtime:"" }
         ],
-      today:(new Date()).toLocaleString(),
+      today:(new Date()),
+      modelConfig: {
+        type: 'string',
+      }
     };
   },
   methods: {
