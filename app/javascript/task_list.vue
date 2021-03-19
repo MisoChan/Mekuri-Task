@@ -163,7 +163,13 @@
       >
         <li class="mt-1">
           <div id="calender">
-            <a href="#">ここにカレンダー。</a>
+             <v-date-picker
+             
+                  v-model="today"
+                 class="task_input_date"
+
+                  
+                />
           </div>
         </li>
 
@@ -189,8 +195,9 @@ import { csrfToken } from "rails-ujs";
 import Datepicker from 'vuejs-datepicker';
 
 export default {
-  components : {
-  Datepicker
+  components: {
+  Datepicker,
+
   },
   data: function() {
     return {

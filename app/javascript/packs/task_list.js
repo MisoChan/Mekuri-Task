@@ -7,10 +7,10 @@
 
 import Vue from 'vue'
 import App from '../task_list.vue'
-
+import VCalendar from 'v-calendar';
 
 document.addEventListener('DOMContentLoaded', () => {
- 
+  Vue.use(VCalendar);
   const task_list = new Vue({
     render: h => h(App),
     
