@@ -22,44 +22,28 @@
         <ul style="list-style: none">
           <li class="task_input_li">
             <div class="head_timeset">
-              <input
+              
+              <li class="task_input_li ">
+               
+                <input
                 type="text"
                 id="taskhead_titleinput"
-                class="col-11"
+                class="col-8"
                 v-model="task_head_title"
                 placeholder="タスク タイトル"
+                @keydown.prevent.enter="selectId('taskhead_timeinput_from')"
               />
-              <li class="task_input_li ">
-                <div style="text-align: right;">
-                  
-                
-                <Datepicker
-                :format="DatePickerFormat"
-                  v-model="task_date_begin"
-                 class="task_input_date"
-                  placeholder="開始日"
-                  
-                />
-               <span class="task_input_times__begin">
-                <span>
+               
                 <input
                   type="text"
                   id="taskhead_timeinput_from"
+                  
                    v-model="task_date_begin_time"
                   class="task_input_times"
                   placeholder="開始時間"
+                  @keydown.prevent.enter="selectId('taskhead_timeinput_to')"
                 />
-                 
-                </span>
-               
-                 </span>
                 <a>- ></a>
-                <Datepicker
-                  :format="DatePickerFormat"
-                  v-model="task_date_end"
-                  class="task_input_date"
-                  placeholder="終了日"
-                />
                 <input
                   type="text"
                   id="taskhead_timeinput_to"
@@ -68,13 +52,14 @@
                   placeholder="終了時間"
                 />
 
-                </div>
+              
  
               </li>
               <li>
                 <input
                   type="text"
                   id="taskhead_plansinput"
+                  v-model="task_head_memo"
                   class="col-11"
                   placeholder="メモを入力…"
                 />
@@ -83,19 +68,26 @@
           </li>
           <hr />
           <div v-for="(plan,index) in taskplans" v-bind:key="plan.key">
-            <li class="task_input_li task_plans" data-planid="plan.key"  >
+            <li class="task_input_li task_plans" v-bind:data-planid="plan.key" >
               
               <input
                 type="text"
-                class="col-9"
+                class="col-9 taskplan_titles"
                 v-model="plan.title"
                 placeholder="内容を入力…"
+                v-bind:id="plan.key"
+                @keydown.prevent.enter="selectId(plan.key+'_TIME')"
               />
               <input
                 type="text"
-                id="task_plan_time"
                 class="col-2"
                 v-model="plan.reqtime"
+                v-bind:id="plan.key+'_TIME'"
+                v-bind:data-nextkey="plan.nextkey"
+                @keypress="validateNum"
+                @input="plan.reqtime = format(plan.reqtime)"
+              @keydown.prevent.enter="dupeTaskPlanLists(index)"
+
                 placeholder="所要時間（分）"
               />
               <button type="button" class="btn btn-primary plan_delete"  @click="deleteTaskPlan(index)">削除</button>
@@ -104,7 +96,7 @@
         </ul>
         <ul style="list-style: none">
            <li class="task_input_li" > 
-            <button type="button" class="btn btn-primary" @click="dupeTaskPlanLists()">こまかい内容追加</button>
+            <button type="button" class="btn btn-primary" @click="dupeTaskPlan()">こまかい内容追加</button>
           </li>  
         </ul>
         <div class="text-right">
@@ -164,10 +156,9 @@
         <li class="mt-1">
           <div id="calender">
              <v-date-picker
-                :Format=Datepicker
+                :Format=DatePickerFormat
                   v-model="today"
                   is-required
-                  
                 />
           </div>
         </li>
@@ -191,13 +182,10 @@
 <script>
 import axios from "axios";
 import { csrfToken } from "rails-ujs";
-import Datepicker from 'vuejs-datepicker';
+import Mixins from "./modules/common_vue_mixin.js";
 
 export default {
-  components: {
-  Datepicker,
-
-  },
+  mixins: [Mixins],
   data: function() {
     
     return {
@@ -206,21 +194,27 @@ export default {
       task_date_end: "",
       task_date_begin_time: "",
       task_date_end_time: "",
+      task_head_memo: "",
       DatePickerFormat: 'yyyy-MM-dd',
       checkdone: [],
       tasklist: [],
       taskplans: [
         { key: 0,
         title: "",
-        reqtime:"" }
+        reqtime:"",
+        nextkey:1,
+        }
         ],
       today:(new Date()),
       modelConfig: {
         type: 'string',
-      }
+      },
+      //内容の追加を行ってもいいか
+      canAddPlan : false
     };
   },
   methods: {
+ 
     //ヘッダがチェックされたときに発火するやつ。
     checkHeaders: function(headid) {
       let headerelem = document.getElementById(headid);
@@ -264,18 +258,64 @@ export default {
         .getElementById("task_lists")
         .querySelectorAll('[data-task-header="' + dataval + '"]');
     },
-    //タスク内容の新規追加を行う。
-    dupeTaskPlanLists(){
-      
-    var randid = Math.random().toString(36).slice(-8);
-    
-    var taskplan_datatemplate  = 
-        { key: randid,
-        title: "",
-        reqtime:"" };
-    this.taskplans.push(taskplan_datatemplate);
+
+    async reverseTaskPlanLists(list_index){
 
     },
+    dupeTaskPlan(){
+      var list_index = this.taskplans.length-1;
+      this.dupeTaskPlanLists(list_index);
+    },
+    //タスク内容の新規追加を行う。
+    async dupeTaskPlanLists(list_index){
+    
+    var randid = Math.random().toString(36).slice(8);
+    //インデックスを取得
+      var index = this.taskplans[list_index];
+
+      var canSelect = false;
+      var canAddPlan = false;
+      var isTitleInput = !index.title ;
+      var isReqTimeInput = !index.reqtime;
+      //直近の入力項目がEmptyではない？
+      if(!isTitleInput && !isReqTimeInput){
+        //次のインデックスが存在する？
+        if(list_index === (this.taskplans.length-1)){
+          //empty→追加
+          this.addTaskPlan(randid);
+          canAddPlan = true;
+        }else{
+          
+          canSelect=true
+        }
+        
+      }
+     // DOM が更新されるのを待つ
+      await this.$nextTick();
+        if(canSelect){
+          var next_index = this.taskplans[list_index+1].key;
+          this.selectId(next_index);
+        }
+        else if(canAddPlan){
+        var plans = document.getElementById(randid);
+        plans.select();
+      }
+    },
+
+    async addTaskPlan(randid){
+      var taskplan_datatemplate  = 
+                  { key: randid,
+                  title: "",
+                  reqtime:"",
+                  nextkey: randid
+                  
+                  };
+                  
+        this.taskplans.push(taskplan_datatemplate);
+        
+    },
+
+    
     //タスク内容の削除を行う。
     deleteTaskPlan(index){
       this.taskplans.splice(index,1);
@@ -293,6 +333,7 @@ export default {
         task_head_title: this.task_head_title,
         task_date_begin: this.task_date_begin,
         task_date_end: this.task_date_end,
+        task_head_memo: this.task_head_memo,
         task_date_begin_time: this.task_date_begin_time,
         task_date_end_time: this.task_date_end_time,
         task_plans:this.taskplans
