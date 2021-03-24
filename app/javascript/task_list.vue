@@ -201,8 +201,7 @@ export default {
       taskplans: [
         { key: 0,
         title: "",
-        reqtime:"",
-        nextkey:1,
+        reqtime:""
         }
         ],
       today:(new Date()),
@@ -262,6 +261,8 @@ export default {
     async reverseTaskPlanLists(list_index){
 
     },
+
+    //内容追加ボタン用 タスク内容の新規追加を行う
     dupeTaskPlan(){
       var list_index = this.taskplans.length-1;
       this.dupeTaskPlanLists(list_index);
@@ -292,13 +293,15 @@ export default {
       }
      // DOM が更新されるのを待つ
       await this.$nextTick();
+        //選択可能？
         if(canSelect){
           var next_index = this.taskplans[list_index+1].key;
           this.selectId(next_index);
         }
+        //それとも新規追加？
         else if(canAddPlan){
-        var plans = document.getElementById(randid);
-        plans.select();
+          var plans = document.getElementById(randid);
+          plans.select();
       }
     },
 
@@ -306,9 +309,7 @@ export default {
       var taskplan_datatemplate  = 
                   { key: randid,
                   title: "",
-                  reqtime:"",
-                  nextkey: randid
-                  
+                  reqtime:""
                   };
                   
         this.taskplans.push(taskplan_datatemplate);
@@ -359,5 +360,9 @@ export default {
   mounted() {
 
   },
+  //値の変更監視
+  watch(){
+
+  }
 };
 </script>
