@@ -258,8 +258,8 @@ export default {
         .querySelectorAll('[data-task-header="' + dataval + '"]');
     },
 
-    async reverseTaskPlanLists(list_index){
-
+    async reverseTaskPlanList(list_index){
+      
     },
 
     //内容追加ボタン用 タスク内容の新規追加を行う
@@ -270,14 +270,26 @@ export default {
     //タスク内容の新規追加を行う。
     async dupeTaskPlanLists(list_index){
     
-    var randid = Math.random().toString(36).slice(8);
-    //インデックスを取得
+      var randid = Math.random().toString(36).slice(8);
+      //インデックスを取得
       var index = this.taskplans[list_index];
 
       var canSelect = false;
       var canAddPlan = false;
-      var isTitleInput = !index.title ;
-      var isReqTimeInput = !index.reqtime;
+      var isTitleInput = false;
+      var isReqTimeInput = false;
+
+      //リストに何もないならここで新規作成
+      if(!index){
+        //empty→追加
+        this.addTaskPlan(randid);
+        canAddPlan = true;
+      }else{
+        isTitleInput = !index.title ;
+        isReqTimeInput = !index.reqtime;
+      }
+
+
       //直近の入力項目がEmptyではない？
       if(!isTitleInput && !isReqTimeInput){
         //次のインデックスが存在する？
