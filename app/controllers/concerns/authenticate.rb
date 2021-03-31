@@ -3,4 +3,21 @@ module Authenticate
 
     extend ActiveSupport::Concern
     
+
+    def logIn(){
+        session[:user_id]
+        
+    }
+    
+    def isSessionExpired(){
+
+    }
+
+    def updateSession(){
+
+    }
+
+    def deleteSession(){
+
+    }
 end
