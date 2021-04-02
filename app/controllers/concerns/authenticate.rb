@@ -1,23 +1,23 @@
 module Authenticate
     #認証系統制御を行う。
-
+    include Session
     extend ActiveSupport::Concern
     
 
-    def logIn(){
-        session[:user_id]
-        
-    }
+    def logIn()
+      
+    end
     
-    def isSessionExpired(){
+    
+    def isSessionExpired()
 
-    }
+    end
 
-    def updateSession(){
+    def updateSession()
 
-    }
+    end
 
-    def deleteSession(){
+    def deleteSession()
 
-    }
+    end
 end

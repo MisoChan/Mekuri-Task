@@ -4,6 +4,7 @@ class AuthenticateController < ApplicationController
     end
 
     def create
+  
     end
 
     def destroy
