@@ -4,7 +4,7 @@ module Authenticate
     extend ActiveSupport::Concern
     
 
-    def logIn()
+    def logIn(user,password)
       
     end
     
