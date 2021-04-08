@@ -7,9 +7,11 @@ module Session
 
     #セッション作成
     def create(user)
-        token = SecureRandom.hex(64)
+       
+        token = generateToken()
+        #セッション追加
         UserSession.new(token: token,userid: user)
-
+        #発行したトークンを返却
         return token
     end
 
@@ -18,12 +20,14 @@ module Session
 
     end
 
-    def delete()
-
+    def delete(user)
+        UserSession.delete(user)
     end
 
     def generateToken()
-
+         #トークンをSecureRandomで作成する
+         token = SecureRandom.hex(64)
+         return token
     end
     
 
