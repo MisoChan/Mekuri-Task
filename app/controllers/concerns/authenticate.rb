@@ -5,13 +5,11 @@ module Authenticate
     
 
     def logIn(user,password)
+      token = Session.create(user)
+      session[:token] = token token
       
     end
     
-    
-    def isSessionExpired()
-
-    end
 
     def updateSession()
 
