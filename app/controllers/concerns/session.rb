@@ -15,13 +15,13 @@ module Session
         return token
     end
 
-    def isavalivale(token)
-        UserSession.find_by(token)
+    def isSessionExists(token)
+        return UserSession.find_by(token) != nil
 
     end
 
-    def delete(user)
-        UserSession.delete(user)
+    def delete(token)
+        UserSession.delete(token)
     end
 
     def generateToken()
