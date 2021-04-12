@@ -1,4 +1,2 @@
-class CookieSession
-  include Mongoid::Document
-  include Mongoid::Timestamps
+class CookieSession < SessionBase
 end

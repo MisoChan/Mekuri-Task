@@ -1,4 +1,4 @@
-<%# encoding: UTF-8 %>
+ <%# encoding: UTF-8 %>
 <p id="notice"><%= notice %></p>
 
 
@@ -8,14 +8,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskList</title>
+    <title><% content_for(:title, 'Login') %></title>
     <%= stylesheet_link_tag "task_lists", :media => "all" %>
-    
+
 </head>
-
 <body>
-    <%= javascript_pack_tag 'task_list' %>
-    <%= stylesheet_pack_tag 'task_list' %> 
+    <%= javascript_pack_tag 'login' %>
+    <%= stylesheet_pack_tag 'login' %> 
 </body>
-
-</html>

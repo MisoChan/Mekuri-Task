@@ -6,11 +6,11 @@ module Session
     include UserSession
 
     #セッション作成
-    def create(user)
+    def create(user,ip_addr)
        
-        token = generateToken()
+        token = self.generateToken()
         #セッション追加
-        UserSession.new(token: token,userid: user)
+        UserSession.new(token: token,userid: user,ip: ip_addr)
         #発行したトークンを返却
         return token
     end
@@ -21,7 +21,7 @@ module Session
     end
 
     def delete(token)
-        UserSession.delete(token)
+        UserSession.find_by(token).delete(token)
     end
 
     def generateToken()

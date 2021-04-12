@@ -1,11 +1,13 @@
 <template>
-  <div id="app">
-    <p>{{ message }}</p>
-  </div>
+  
 </template>
 
 <script>
+import Taskinput from "./components/Taskinput.vue";
 export default {
+   components:{
+     task_list
+   },
   data: function () {
     return {
       message: "Hello Vuuuuuuuee!"
@@ -14,9 +16,4 @@ export default {
 }
 </script>
 
-<style scoped>
-p {
-  font-size: 2em;
-  text-align: center;
-}
-</style>
+
