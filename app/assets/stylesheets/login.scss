@@ -1,3 +1,24 @@
 // Place all the styles related to the login controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@media screen and (min-width:768px){
+    .login_form{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 768px;
+        height: 430px;
+        margin-right: -50%;
+        transform: translate(-50%, -50%) ;
+        border: 1px solid #ccc; /* 枠線 */
+        background-color: 
+        #f2f2f2; 
+        box-shadow: 1px 1px 2px #ccc;
+    }
+
+    .login_form_input_li{
+        position: absolute;
+        top: 50%;
+       
+    }
+}
