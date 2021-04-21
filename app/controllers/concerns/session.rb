@@ -3,14 +3,19 @@ module Session
     #セッション系統制御を行う。
     extend ActiveSupport::Concern
 
-    include UserSession
+
 
     #セッション作成
-    def create(user,ip_addr)
+    def createSession(user,ip_addr)
        
         token = self.generateToken()
         #セッション追加
-        UserSession.new(token: token,userid: user,ip: ip_addr)
+        
+     
+        usersession=UserSession.new(
+            token: token,userid: user,ip: ip_addr)
+
+        usersession.save
         #発行したトークンを返却
         return token
     end

@@ -1,12 +1,17 @@
 module Authenticate
+    extend ActiveSupport::Concern
     #認証系統制御を行う。
     include Session
-    extend ActiveSupport::Concern
+
+   
     
 
     def logIn(user,password)
-      token = Session.create(user)
-      session[:token] = token token
+
+      MUser.find_by(user_email_address: user)
+      
+      token = createSession(user,"127.0.0.1")
+      session[:token] = token 
       
     end
     

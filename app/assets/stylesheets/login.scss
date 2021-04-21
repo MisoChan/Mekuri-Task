@@ -19,8 +19,21 @@
     .login_form_input_li{
         
         position: absolute;
-        top: 40%;
-        padding: 2em 2em 2em 2em
+        top: 30%;
+        list-style: none
+        
        
     }
+    .login_input{
+        margin: 0em 2em 2em 0em;
+    }
+    #login_title{
+        margin: 1em 1em 1em 1em;
+        font-size: 25px
+    }
+    #greet_message{
+        
+        font-size: 15px
+    }
+    
 }

@@ -1,4 +1,16 @@
+
+import axios from "axios";
 export default {
+  
+  created(){
+    //Axiosのヘッダをここで設定する。
+    axios.defaults.headers.common = {
+      "X-Requested-With": "XMLHttpRequest",
+      "X-CSRF-TOKEN": document
+        .querySelector('meta[name="csrf-token"]')
+        .getAttribute("content"),
+    }
+  },
   methods: {
     //InputBoxの選択をする。
     selectId(id_string) {
@@ -27,5 +39,6 @@ export default {
       const replaced = val.replace(/\D/g, ""); // 数字以外を除去
       return replaced ? replaced : "";
     },
+    
   },
 };

@@ -9,7 +9,7 @@ module TasklistControllable
 
 
     def addplan()
-        TTaskPlanHeader.set
+      
     end
 
     def setplan()

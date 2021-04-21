@@ -44,7 +44,6 @@
 
 <script>
 import axios from "axios";
-import { csrfToken } from "rails-ujs";
 import Taskinput from "./components/Taskinput.vue";
 import Taskplan from "./components/TaskPlans.vue";
 
@@ -75,8 +74,7 @@ export default {
   },
     //DOMが出来上がる前にやっとく処理
     created() {
-       //タスク一覧リストの取得
-      axios.defaults.headers.common = csrfToken();
+      
       axios
         .get("/task_lists/show")
         .then((response) => (this.tasklist = response.data));

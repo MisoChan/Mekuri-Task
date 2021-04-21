@@ -200,13 +200,6 @@ export default {
     //タスクリストの登録処理
     sendAddTaskRequest: function() {
       var task_title_txt = document.getElementById("taskhead_titleinput").value;
-
-      axios.defaults.headers.common = {
-        "X-Requested-With": "XMLHttpRequest",
-        "X-CSRF-TOKEN": document
-          .querySelector('meta[name="csrf-token"]')
-          .getAttribute("content"),
-      };
       axios
         .post("/task_lists", {
           task_head_title: this.task_head_title,

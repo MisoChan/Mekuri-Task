@@ -46,7 +46,10 @@ import Mixins from "../modules/common_vue_mixin.js";
 export default {
   mixins: [Mixins],
   props: {
-    item: [],
+    item: {
+      type: Object,
+      reqired: true,
+    },
   },
   methods: {
     //ヘッダがチェックされたときに発火するやつ。

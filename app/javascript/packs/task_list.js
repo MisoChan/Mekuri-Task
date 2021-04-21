@@ -11,11 +11,17 @@ import VCalendar from 'v-calendar';
 
 document.addEventListener('DOMContentLoaded', () => {
   Vue.use(VCalendar);
+  Vue.http.interceptors.push(function(request) {
+    request.credentials = true
+    return function(response) {
+    };
+  });
+  
   const task_list = new Vue({
     render: h => h(App),
     
   }).$mount()
-  
+
   document.body.appendChild(task_list.$el)
 
 
